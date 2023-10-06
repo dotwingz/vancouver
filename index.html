@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Vancouver intext citation generator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+</head>
+
+
+
+
+
+<style>
+
+sup {
+    font-size:xx-small; 
+    vertical-align:super;
+}
+
+
+a {
+    color: #222;
+}
+
+p.likely {
+    color: green;
+}
+
+p.unlikely {
+    color: red;
+}
+
+p.possible {
+    color: orange;
+}
+
+
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/*== start of code for tooltips ==*/
+.tool {
+    cursor: help;
+    position: relative;
+}
+
+
+/*== common styles for both parts of tool tip ==*/
+.tool::before,
+.tool::after {
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    z-index: -100;
+}
+
+.tool:hover::before,
+.tool:focus::before,
+.tool:hover::after,
+.tool:focus::after {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    z-index: 100; 
+}
+
+
+/*== pointer tip ==*/
+.tool::before {
+    border-style: solid;
+    border-width: 1em 0.75em 0 0.75em;
+    border-color: #3E474F transparent transparent transparent;
+    bottom: 100%;
+    content: "";
+    margin-left: -0.5em;
+    transition: all .65s cubic-bezier(.84,-0.18,.31,1.26), opacity .65s .5s;
+    transform:  scale(.6) translateY(-90%);
+} 
+
+.tool:hover::before,
+.tool:focus::before {
+    transition: all .65s cubic-bezier(.84,-0.18,.31,1.26) .2s;
+}
+
+
+/*== speech bubble ==*/
+.tool::after {
+    background: #3E474F;
+    border-radius: .25em;
+    bottom: 180%;
+    color: #EDEFF0;
+    content: attr(data-tip);
+    margin-left: -8.75em;
+    padding: 1em;
+    transition: all .65s cubic-bezier(.84,-0.18,.31,1.26) .2s;
+    transform:  scale(.6) translateY(50%);  
+    width: 17.5em;
+}
+
+.tool:hover::after,
+.tool:focus::after  {
+    transition: all .65s cubic-bezier(.84,-0.18,.31,1.26);
+}
+
+@media (max-width: 760px) {
+  .tool::after { 
+        font-size: .75em;
+        margin-left: -5em;
+        width: 10em; 
+  }
+}
+
+
+
+
+</style>
+
+
+<body onload="Submit()">
+    <div class="container">
+
+
+           <div class="row display-flex" >
+
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10"> 
+
+                            <div class="pb-2 mt-4 mb-3 border-bottom">
+                                <br>
+                                <h1>Vancouver Intext Citation Generator</h1>
+                            
+                            </div>
+
+
+                <div class="p-2">
+                
+                    <div class="bg-light rounded-top border p-2">Input</div>
+
+                    <div class="border-left border-right border-bottom rounded-bottom p-2">
+
+                    <form id="userentry" class="border-bottom" onsubmit="Submit()">
+
+                        <div class="form-group">
+                            <label for="URL">URL of Source</label>
+                            <input class="form-control" id="url" type="test" onkeyup="Submit()" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="texttocite">Text to Cite</label>
+                            <input class="form-control" id="texttocite" type="test" onkeyup="Submit()" placeholder="">
+                        </div>
+                        <input type="submit" class="d-none" value="Submit">
+                    </form>
+
+                    <div class="form-group pt-3">
+                        <p><span id='placeholdertextspan'></span><span id='supscript' style="font-size:xx-small; vertical-align:top;"></span></p>
+
+                    </div>
+
+                    </div>
+                </div>
+
+                            <footer class="footer">
+                                <p class="text-muted float-right float-top sticky-top pr-2"><small> Written by James Gill for shits n gigs </small></p>
+                            </footer>
+
+            </div>
+
+        
+
+           </div> 
+    
+
+    </div>
+
+
+
+</body>
+
+<script>
+    
+
+    function Submit() {
+
+
+        document.getElementById('userentry').addEventListener('submit', function (event) { event.preventDefault() });
+        
+        document.getElementById('placeholdertextspan').innerText = document.getElementById('texttocite').value; 
+        if (document.getElementById('texttocite').value){
+            document.getElementById('supscript').innerText = Math.floor(Math.random() * 60)
+        }
+       
+
+
+}
+  
+
+
+</script>
+
